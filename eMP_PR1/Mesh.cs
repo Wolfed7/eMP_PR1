@@ -2,5 +2,5 @@
     
 internal class Mesh
 {
-
+   int p { get; init; }
 }
