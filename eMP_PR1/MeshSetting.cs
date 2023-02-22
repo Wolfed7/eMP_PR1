@@ -15,6 +15,6 @@ public class MeshSetting : IMeshSetting
 {
    public Mesh SetMesh(MeshType MT, string filePath)
    {
-
+      return SetMesh(MT, filePath);
    }
 }
