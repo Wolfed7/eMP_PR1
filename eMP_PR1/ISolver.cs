@@ -1,4 +1,4 @@
-﻿namespace eMP_1;
+﻿namespace eMP_PR1;
 
 public interface ISolver
 {
@@ -6,12 +6,12 @@ public interface ISolver
    public double Eps { get; init; }
    public double W { get; init; }
 
-   public double[] Compute(DiagMatrix diagMatrix, double[] pr);
+   public double[] Compute(Matrix5Diags diagMatrix, double[] pr);
 }
 
 public record GaussSeidel(int MaxIters, double Eps, double W) : ISolver
 {
-   public double[] Compute(DiagMatrix diagMatrix, double[] pr)
+   public double[] Compute(Matrix5Diags diagMatrix, double[] pr)
    {
       double[] qk = new double[diagMatrix.Size];
       double[] qk1 = new double[diagMatrix.Size];
@@ -39,7 +39,7 @@ public record GaussSeidel(int MaxIters, double Eps, double W) : ISolver
       return qk;
    }
 
-   private static double MultLine(DiagMatrix diagMatrix, int i, double[] vector, int method)
+   private static double MultLine(Matrix5Diags diagMatrix, int i, double[] vector, int method)
    {
       double sum = 0;
 
