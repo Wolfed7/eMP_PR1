@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace eMP_PR1;
+﻿namespace eMP_PR1;
 
 public interface ISolver
 {
@@ -31,8 +29,8 @@ public record GaussSeidel(int MaxIters, double Eps, double W) : ISolver
             qk1[k] = qk[k] + W * residual[k] / diagMatrix.Diags[0][k];
          }
 
-         Array.Copy(qk1, qk, qk1.Length);
-         Array.Clear(qk1, 0, qk1.Length);
+         qk1.Copy(qk);
+         qk1.Fill(0);
 
          if (residual.Norm() / prNorm < Eps)
             break;
@@ -71,7 +69,4 @@ public record GaussSeidel(int MaxIters, double Eps, double W) : ISolver
 
       return sum;
    }
-
-
 }
-
