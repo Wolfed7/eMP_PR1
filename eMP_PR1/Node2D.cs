@@ -23,7 +23,7 @@ public class Node2D
    public int I { get; init; }
    public int J { get; init; }
 
-   public NodeType NodeType { get; set; } 
+   public NodeType NT { get; set; } 
 
-   public BoundaryType BoundaryType { get; set; }
+   public BoundaryType BT { get; set; }
 }

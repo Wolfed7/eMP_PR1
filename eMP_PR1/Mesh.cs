@@ -1,6 +1,7 @@
 ﻿namespace eMP_PR1;
-    
-internal class Mesh
+
+public abstract class Mesh
 {
-   int p { get; init; }
+
 }
+
