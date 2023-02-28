@@ -11,28 +11,28 @@ public interface ISolver
 
 public record GaussSeidel(int MaxIters, double Eps, double W) : ISolver
 {
-   public double[] Compute(Matrix5Diags diagMatrix, double[] pr)
+   public double[] Compute(Matrix5Diags matrix, double[] rightPart)
    {
-      double[] qk = new double[diagMatrix.Size];
-      double[] qk1 = new double[diagMatrix.Size];
-      double[] residual = new double[diagMatrix.Size];
-      double prNorm = pr.Norm();
+      double[] qk = new double[matrix.Size];
+      double[] qk1 = new double[matrix.Size];
+      double[] residual = new double[matrix.Size];
+      double rightPartNorm = rightPart.Norm();
 
       for (int i = 0; i < MaxIters; i++)
       {
-         for (int k = 0; k < diagMatrix.Size; k++)
+         for (int k = 0; k < matrix.Size; k++)
          {
-            double fstSum = MultLine(diagMatrix, k, qk1, 1);
-            double scdSum = MultLine(diagMatrix, k, qk, 2);
+            double fstSum = MultLine(matrix, k, qk1, 1);
+            double scdSum = MultLine(matrix, k, qk, 2);
 
-            residual[k] = pr[k] - (fstSum + scdSum);
-            qk1[k] = qk[k] + W * residual[k] / diagMatrix.Diags[0][k];
+            residual[k] = rightPart[k] - (fstSum + scdSum);
+            qk1[k] = qk[k] + W * residual[k] / matrix.Diags[0][k];
          }
 
-         qk1.Copy(qk);
-         qk1.Fill(0);
+         Array.Copy(qk1, qk, qk1.Length);
+         Array.Clear(qk1, 0, qk1.Length);
 
-         if (residual.Norm() / prNorm < Eps)
+         if (residual.Norm() / rightPartNorm < Eps)
             break;
       }
 
