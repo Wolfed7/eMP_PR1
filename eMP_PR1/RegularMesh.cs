@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-
 namespace eMP_PR1;
 
 public class RegularMesh : Mesh
@@ -47,27 +46,25 @@ public class RegularMesh : Mesh
 
    public override void Build()
    {
+      // Разбиение по X
       double lenght = LinesX.Last() - LinesX.First();
       double h = lenght / SplitsX;
 
       _allLinesX.Add(LinesX.First());
-
       while (Math.Round(_allLinesX.Last() + h, 1) < LinesX.Last())
          _allLinesX.Add(_allLinesX.Last() + h);
-
       _allLinesX = _allLinesX.Union(LinesX).OrderBy(value => value).ToList();
 
+      // Разбиение по Y
       lenght = LinesY.Last() - LinesY.First();
-
       h = lenght / SplitsY;
 
       _allLinesY.Add(LinesY.First());
-
       while (Math.Round(_allLinesY.Last() + h, 1) < LinesY.Last())
          _allLinesY.Add(_allLinesY.Last() + h);
-
       _allLinesY = _allLinesY.Union(LinesY).OrderBy(value => value).ToList();
 
+      // Сборка массива узлов.
       for (int i = 0; i < _allLinesX.Count; i++)
          for (int j = 0; j < _allLinesY.Count; j++)
             _nodes.Add(new(_allLinesX[i], _allLinesY[j], i, j, 

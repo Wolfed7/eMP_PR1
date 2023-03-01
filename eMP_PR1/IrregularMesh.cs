@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Reflection.Metadata;
 
 namespace eMP_PR1;
 
@@ -19,10 +18,10 @@ public class IrregularMesh : Mesh
    public override ImmutableList<double> AllLinesX => _allLinesX.ToImmutableList();
    public override ImmutableList<double> AllLinesY => _allLinesY.ToImmutableList();
    public override ImmutableArray<(int, double, double, int, int, int, int)> Areas => _areas.ToImmutableArray();
-   //public ImmutableArray<int> SplitsX => _splitsX.ToImmutableArray();
-   //public ImmutableArray<int> SplitsY => _splitsY.ToImmutableArray();
-   //public ImmutableArray<double> KX => _kX.ToImmutableArray();
-   //public ImmutableArray<double> KY => _kY.ToImmutableArray();
+   public ImmutableArray<int> SplitsX => _splitsX.ToImmutableArray();
+   public ImmutableArray<int> SplitsY => _splitsY.ToImmutableArray();
+   public ImmutableArray<double> KX => _kX.ToImmutableArray();
+   public ImmutableArray<double> KY => _kY.ToImmutableArray();
 
    public IrregularMesh(string path)
    {
@@ -53,6 +52,11 @@ public class IrregularMesh : Mesh
 
    public override void Build()
    {
+      // Разбиение каждой области в соответствии с её параметрами:
+      // количеством разбиений
+      // коэффициенте разрядки
+
+      // По оси X
       for (int i = 0; i < LinesX.Length - 1; i++)
       {
          double h;
@@ -69,13 +73,12 @@ public class IrregularMesh : Mesh
          while (Math.Round(_allLinesX.Last() + h, 1) < LinesX[i + 1])
          {
             _allLinesX.Add(_allLinesX.Last() + h);
-
             h *= _kX[i];
          }
       }
-
       _allLinesX.Add(LinesX.Last());
 
+      // По оси Y
       for (int i = 0; i < LinesY.Length - 1; i++)
       {
          double h;
@@ -92,13 +95,12 @@ public class IrregularMesh : Mesh
          while (Math.Round(_allLinesY.Last() + h, 1) < LinesY[i + 1])
          {
             _allLinesY.Add(_allLinesY.Last() + h);
-
             h *= _kY[i];
          }
       }
-
       _allLinesY.Add(LinesY.Last());
 
+      // Сборка массива узлов.
       for (int i = 0; i < _allLinesX.Count; i++)
          for (int j = 0; j < _allLinesY.Count; j++)
             _nodes.Add(new(_allLinesX[i], _allLinesY[j], i, j,

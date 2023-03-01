@@ -1,4 +1,6 @@
-﻿namespace eMP_PR1;
+﻿using System.Xml.Linq;
+
+namespace eMP_PR1;
 
 public class MFD
 {
@@ -84,6 +86,15 @@ public class MFD
       U = new double[Matrix.Size];
    }
 
+   public void OutputResultU()
+   {
+      using (var sw = new StreamWriter("Output/ResultU.txt"))
+      {
+         for (int i = 0; i < U.Length; i++)
+            sw.WriteLine(U[i].ToString("e15"));
+      }
+   }
+
    private void BuildMatrix()
    {
       double hx, hy, hix, hiy, hi;
@@ -92,16 +103,21 @@ public class MFD
       double leftDerivative, rightDerivative;
       NormalDirection normalDirection;
 
+      // Для каждого узла 
       for (int i = 0; i < _Mesh.Nodes.Count; i++)
       {
+         // сверяем тип с кейсами.
          switch (_Mesh.Nodes[i].NT)
          {
+            // Если узел граничный: 
             case NodeType.Boundary:
 
+               // Смотрим на тип краевых условий
                switch (_Mesh.Nodes[i].BT)
                {
                   case BoundaryType.Dirichlet:
 
+                     // На диагонали единицу, в правой части значение функции.
                      Matrix.Diags[0][i] = 1;
                      RightPart[i] = Test.U(_Mesh.Nodes[i]);
 
@@ -112,7 +128,6 @@ public class MFD
                      lambda = _Mesh.Areas[_Mesh.Nodes[i].AreaNumber].Item2;
 
                      normalDirection = _Mesh.Normal(_Mesh.Nodes[i]);
-
                      switch (normalDirection)
                      {
                         case NormalDirection.LeftX:
@@ -273,19 +288,14 @@ public class MFD
       }
    }
 
-   private void OutResultU()
-   {
-
-   }
-
    private double LeftDerivativeX(Node2D point, double h)
        => (Test.U(point) - Test.U(point - (h, 0))) / h;
 
-   private double LeftDerivativeY(Node2D point, double h)
-       => (Test.U(point) - Test.U(point - (0, h))) / h;
-
    private double RightDerivativeX(Node2D point, double h)
        => (Test.U(point + (h, 0)) - Test.U(point)) / h;
+
+   private double LeftDerivativeY(Node2D point, double h)
+       => (Test.U(point) - Test.U(point - (0, h))) / h;
 
    private double RightDerivativeY(Node2D point, double h)
        => (Test.U(point + (0, h)) - Test.U(point)) / h;

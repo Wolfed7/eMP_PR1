@@ -5,8 +5,8 @@ const string RegularMeshPath = "Input/RegularMesh.txt";
 const string IrregularMeshPath = "Input/IrregularMesh.txt";
 
 const int iterations = 10000;
-const double epsilon = 1e-14;
-const double w = 1.23;
+const double epsilon = 1e-25;
+const double w = 1.21;
 
 MeshSetting meshSetting = new();
 
@@ -27,3 +27,4 @@ mfd.SetTest(new FirstTest());
 
 mfd.SetMethodSolvingSLAE(new GaussSeidel(iterations, epsilon, w));
 mfd.Compute();
+mfd.OutputResultU();

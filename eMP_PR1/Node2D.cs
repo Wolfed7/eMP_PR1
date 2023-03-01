@@ -54,6 +54,6 @@ public class Node2D
        => new(node.X - value.Item1, node.Y - value.Item2, node.I, node.J, node.NT);
 
    public override string ToString()
-       => $"({X}, {Y})";
+       => $"{X} {Y}";
 }
 
