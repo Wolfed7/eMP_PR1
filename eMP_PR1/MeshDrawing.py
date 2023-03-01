@@ -22,7 +22,7 @@ with open("Nodes/FakeNodes.txt") as file:
 
 plt.grid()
 
-plt.plot(xB, yB, 'o', color='r')
-plt.plot(xI, yI, 'o', color='y')
-plt.plot(xF, yF, 'o', color='b')
+plt.plot(xB, yB, 's', color='red', markersize=7)
+plt.plot(xI, yI, 's', color='green', markersize=6)
+plt.plot(xF, yF, 'x', color='black', markersize=6)
 plt.show()

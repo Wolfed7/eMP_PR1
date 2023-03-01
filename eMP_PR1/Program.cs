@@ -1,5 +1,4 @@
 ﻿using eMP_PR1;
-using System.Diagnostics;
 
 const string BoundariesPath = "Input/Boundaries.txt";
 const string RegularMeshPath = "Input/RegularMesh.txt";

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Nodes\" />
+    <Folder Include="Output\" />
   </ItemGroup>
 
 </Project>

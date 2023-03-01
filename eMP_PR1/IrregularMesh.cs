@@ -19,10 +19,10 @@ public class IrregularMesh : Mesh
    public override ImmutableList<double> AllLinesX => _allLinesX.ToImmutableList();
    public override ImmutableList<double> AllLinesY => _allLinesY.ToImmutableList();
    public override ImmutableArray<(int, double, double, int, int, int, int)> Areas => _areas.ToImmutableArray();
-   public ImmutableArray<int> SplitsX => _splitsX.ToImmutableArray();
-   public ImmutableArray<int> SplitsY => _splitsY.ToImmutableArray();
-   public ImmutableArray<double> KX => _kX.ToImmutableArray();
-   public ImmutableArray<double> KY => _kY.ToImmutableArray();
+   //public ImmutableArray<int> SplitsX => _splitsX.ToImmutableArray();
+   //public ImmutableArray<int> SplitsY => _splitsY.ToImmutableArray();
+   //public ImmutableArray<double> KX => _kX.ToImmutableArray();
+   //public ImmutableArray<double> KY => _kY.ToImmutableArray();
 
    public IrregularMesh(string path)
    {
@@ -39,13 +39,11 @@ public class IrregularMesh : Mesh
             _areas = sr.ReadToEnd().Split("\n").Select(row => row.Split())
             .Select(value => (int.Parse(value[0]), double.Parse(value[1]), double.Parse(value[2]),
             int.Parse(value[3]), int.Parse(value[4]), int.Parse(value[5]), int.Parse(value[6]))).ToArray();
-
          }
 
          _allLinesX = new();
          _allLinesY = new();
          _nodes = new();
-
       }
       catch (Exception ex)
       {

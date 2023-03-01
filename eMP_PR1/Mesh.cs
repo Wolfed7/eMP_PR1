@@ -101,7 +101,7 @@ public abstract class Mesh
 
    // Устанавливает тип краевых условий для всех граничных узлов сетки
    // в соответствии с входными параметрами.
-   public void AssignBoundaryConditions(Boundary[] boundaries)
+   public void SetBoundaryConditions(Boundary[] boundaries)
    {
       foreach (var node in Nodes.Where(node => node.NT == NodeType.Boundary))
          for (int k = 0; k < boundaries.Length; k++)
@@ -113,7 +113,7 @@ public abstract class Mesh
             }
    }
 
-
+   // Вывод в файлы. Нужны для отрисовки области.
    protected void WriteToFilePoints()
    {
       using (var sw = new StreamWriter("Nodes/boundaryNodes.txt"))

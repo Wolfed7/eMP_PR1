@@ -21,7 +21,7 @@ public class MeshSetting : IMeshSetting
       {
          MeshType.Regular => new RegularMesh(filePath),
 
-         //MeshType.Irregular => new IrregularMesh(filePath),
+         MeshType.Irregular => new IrregularMesh(filePath),
 
          _ => throw new ArgumentOutOfRangeException(nameof(MT),
          $"Неизвестный тип сетки: {MT}")
