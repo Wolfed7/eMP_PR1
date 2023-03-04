@@ -1,4 +1,6 @@
 ﻿using System.Collections.Immutable;
+using System.Globalization;
+
 namespace eMP_PR1;
 
 public enum NormalDirection
@@ -116,6 +118,7 @@ public abstract class Mesh
    // Вывод в файлы. Нужны для отрисовки области.
    protected void WriteToFilePoints()
    {
+
       using (var sw = new StreamWriter("Nodes/boundaryNodes.txt"))
       {
          Nodes.ForEach(x => { if (x.NT == NodeType.Boundary) sw.WriteLine(x); });

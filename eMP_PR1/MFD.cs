@@ -90,8 +90,23 @@ public class MFD
    {
       using (var sw = new StreamWriter("Output/ResultU.txt"))
       {
+         double sumError = 0;
+         double sumExac = 0;
+
          for (int i = 0; i < U.Length; i++)
-            sw.WriteLine(U[i].ToString("e15"));
+         {
+            if(_Mesh.Nodes[i].NT == NodeType.Inner)
+            {
+               sw.Write($"{_Mesh.Nodes[i].X.ToString("f2")} {_Mesh.Nodes[i].Y.ToString("f2")} ");
+               sw.Write($"{Test.U(_Mesh.Nodes[i]).ToString("e16")} ");
+               sw.Write($"{U[i].ToString("e16")} ");
+               sw.WriteLine(Math.Abs(Test.U(_Mesh.Nodes[i]) - U[i]).ToString("e2"));
+
+               sumExac += Math.Pow(Test.U(_Mesh.Nodes[i]), 2);
+               sumError += Math.Pow(Test.U(_Mesh.Nodes[i]) - U[i], 2);
+            }
+         }
+         sw.WriteLine(Math.Sqrt(sumError) / Math.Sqrt(sumExac));
       }
    }
 

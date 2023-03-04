@@ -1,7 +1,10 @@
-﻿namespace eMP_PR1;
+﻿using System.Globalization;
+
+namespace eMP_PR1;
 
 public enum BoundaryType
 {
+   None,       // Нет краевых.
    Dirichlet,  // Краевое первого типа.
    Neumann,    // Второго.
    Third       // Третьего.
@@ -54,6 +57,11 @@ public class Node2D
        => new(node.X - value.Item1, node.Y - value.Item2, node.I, node.J, node.NT);
 
    public override string ToString()
-       => $"{X} {Y}";
+   {
+      NumberFormatInfo SeparatorDot = new NumberFormatInfo();
+      SeparatorDot.NumberDecimalSeparator = ".";
+      return $"{X.ToString(SeparatorDot)} {Y.ToString(SeparatorDot)}";
+   }
+
 }
 
